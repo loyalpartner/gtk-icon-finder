@@ -1,0 +1,31 @@
+{
+  "name": "gtk-icon-finder",
+  "version": "1.0.0",
+  "description": "Find GTK icon files by name using node-gtk",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "tsx src/cli.ts",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist",
+    "prepublishOnly": "npm run clean && npm run build"
+  },
+  "bin": {
+    "icon-finder": "./dist/cli.js"
+  },
+  "keywords": ["gtk", "icons", "icon-theme", "node-gtk", "linux"],
+  "author": "",
+  "license": "MIT",
+  "files": [
+    "dist/**/*"
+  ],
+  "devDependencies": {
+    "@types/node": "^24.3.3",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.2"
+  },
+  "dependencies": {
+    "node-gtk": "^1.0.0"
+  }
+}
