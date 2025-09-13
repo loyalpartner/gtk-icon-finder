@@ -1,12 +1,12 @@
 {
   "name": "gtk-icon-finder",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Find GTK icon files by name using node-gtk",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "test": "tsx src/cli.ts",
+    "test": "tsx src/cli.ts cursor",
     "typecheck": "tsc --noEmit",
     "clean": "rm -rf dist",
     "prepublishOnly": "npm run clean && npm run build"

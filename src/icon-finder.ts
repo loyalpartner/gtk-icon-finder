@@ -1,6 +1,6 @@
-import * as gi from 'node-gtk';
+import * as gi from "node-gtk";
 
-const Gtk = gi.require('Gtk', '3.0');
+const Gtk = gi.require("Gtk", "3.0");
 
 // Initialize GTK
 Gtk.init();
@@ -8,6 +8,11 @@ Gtk.init();
 export interface IconInfo {
   path: string;
   sizes: number[];
+}
+
+export enum IconLookupFlags {
+  USE_BUILTIN = 1 << 2,
+  GENERIC_FALLBACK = 1 << 3,
 }
 
 export class IconFinder {
@@ -18,25 +23,18 @@ export class IconFinder {
   }
 
   /**
-   * Check if an icon exists in the current theme
-   */
-  public hasIcon(iconName: string): boolean {
-    return this.iconTheme.hasIcon(iconName);
-  }
-
-  /**
    * Find all files for a given icon name
    */
   public findIcon(iconName: string): IconInfo[] {
-    if (!this.hasIcon(iconName)) {
-      return [];
-    }
-
     const sizes = [16, 22, 24, 32, 48, 64, 96, 128, 256, 512];
     const foundIcons = new Map<string, number[]>();
 
     for (const size of sizes) {
-      const iconInfo = this.iconTheme.lookupIcon(iconName, size, 0);
+      const iconInfo = this.iconTheme.lookupIcon(
+        iconName,
+        size,
+        IconLookupFlags.USE_BUILTIN | IconLookupFlags.GENERIC_FALLBACK,
+      );
 
       if (iconInfo) {
         const filename = iconInfo.getFilename();
@@ -62,11 +60,11 @@ export class IconFinder {
    * Get the best icon file for a given size
    */
   public findIconForSize(iconName: string, size: number): string | null {
-    if (!this.hasIcon(iconName)) {
-      return null;
-    }
-
-    const iconInfo = this.iconTheme.lookupIcon(iconName, size, 0);
+    const iconInfo = this.iconTheme.lookupIcon(
+      iconName,
+      size,
+      IconLookupFlags.USE_BUILTIN | IconLookupFlags.GENERIC_FALLBACK,
+    );
 
     if (iconInfo) {
       const filename = iconInfo.getFilename();
